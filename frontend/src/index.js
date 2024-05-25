@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-   <div className='  h-full w-full'>
+   <div className=' h-full w-full'>
      <BrowserRouter>
     <App/>
     </BrowserRouter>
