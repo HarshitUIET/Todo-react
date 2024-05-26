@@ -1,45 +1,30 @@
-import React, { useState,useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Taskitems from './components/Taskitems'
 import TaskForm from './components/TaskForm';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { toast } from 'react-hot-toast';
-
+import { Button, Dialog, DialogActions, DialogContent,  DialogTitle } from '@mui/material';
+import { useSelector,useDispatch } from 'react-redux';
+import { fetchTasks, setIsAdd} from './redux/slices/TaskSlice';
 
 
 const App = () => {
 
+  const {tasks,isAdd} = useSelector((state) => state.tasks);
 
-  const [tasks,setTasks] = useState([]);
+  const dispatch = useDispatch();
+  
 
   useEffect(() => {
-    const getTasks = async () => {
-        try {
-            const response = await fetch("http://localhost:5000/api/tasks");
-            if (!response.ok) {
-                throw new Error('Failed to fetch tasks');
-            }
-            const tasksFromServer = await response.json();
-            setTasks(tasksFromServer);
-        } catch (error) {
-            console.error('Error fetching tasks:', error.message);
-            // Handle error here, such as showing an error message to the user
-            toast.error('Failed to fetch tasks. Please try again later.');
-        }
-    };
-    getTasks();
-}, [tasks]);
+    dispatch(fetchTasks());
+}, [dispatch]);
 
-
- 
-  const [isAdd,setIsAdd] = useState(false);
 
  const AddHandler = () => {
-    setIsAdd(true);
+    dispatch(setIsAdd(true)); 
     console.log("Added");
  }
 
  const handleToClose = () => {
-    setIsAdd(false);
+    dispatch(setIsAdd(false));
     console.log("Closed");  
   }
 
@@ -72,9 +57,14 @@ const App = () => {
         </div>
        <div className=' max-h-[120] overflow-y-auto no-scrollbar'>
        {
+
+              tasks.length > 0 ? 
+
           tasks.map((task)=>(
             <Taskitems task={task} key={task.id}/>
           ))
+          :
+          <div className=' text-center text-3xl font-bold text-lightpink mt-44'>No Task to show</div>
         }
        </div>
       </div>

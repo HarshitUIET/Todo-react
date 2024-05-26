@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { toast } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { fetchTasks } from '../redux/slices/TaskSlice';
 
 const TaskForm = ({Edit,id}) => {
 
 
-    
+  const dispatch = useDispatch();
 
    const [formData, setFormData] = useState({
     title: '',
@@ -18,6 +20,18 @@ const TaskForm = ({Edit,id}) => {
             return {...prev, [e.target.name]: e.target.value};
         })
     }
+
+    useEffect(() => {
+        if (Edit) {
+            // Fetch task details from API based on the task ID
+            const fetchTask = async () => {
+                const res = await fetch(`http://localhost:5000/api/tasks/${id}`);
+                const data = await res.json();
+                setFormData(data); // Update form data with task details
+            };
+            fetchTask();
+        } 
+    }, [Edit, id]);
     
     const AddHandler = (e) => {
         e.preventDefault();
@@ -34,6 +48,7 @@ const TaskForm = ({Edit,id}) => {
             });
             const data = await res.json();  
             console.log(data);
+            dispatch(fetchTasks());
         }
         addTask();
 
@@ -56,6 +71,7 @@ const TaskForm = ({Edit,id}) => {
             });
             const data = await res.json();
             console.log(data);
+            dispatch(fetchTasks());
         }
         editTask();
 

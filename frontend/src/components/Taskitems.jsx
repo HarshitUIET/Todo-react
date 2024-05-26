@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import toast from 'react-hot-toast';
 import { MdEditNote } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import TaskForm from './TaskForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTasks,setIsEdit } from '../redux/slices/TaskSlice';
+
 
 const Taskitems = ({ task }) => {
-  const [isEdit, setIsEdit] = useState(false);
+  
+     const {isEdit} = useSelector((state) => state.tasks);
+         const dispatch = useDispatch();
+
   const { title, description, status, id, duedate } = task;
 
   const DeleteHandler = (id) => {
@@ -17,6 +23,7 @@ const Taskitems = ({ task }) => {
         });
         const data = await res.json();
         console.log(data);
+        dispatch(fetchTasks());
         }
         deleteTask();
 
@@ -27,11 +34,11 @@ const Taskitems = ({ task }) => {
   const EditHandler = () => {
 
     
-    setIsEdit(true);
+    dispatch(setIsEdit(true));
   }
 
   const handleToClose = () => {
-    setIsEdit(false);
+    dispatch(setIsEdit(false));
   }
 
   return (
