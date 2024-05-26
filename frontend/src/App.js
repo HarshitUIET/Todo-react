@@ -1,79 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Taskitems from './components/Taskitems'
 import TaskForm from './components/TaskForm';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { toast } from 'react-hot-toast';
 
-const tasks = [
-  {
-    title : "Eat food",
-    description : "Eat food to survive",
-    status : "In progress",
-    id : 1,
-    duedate : "2021-09-30"
-  },
-  {
-    title : "Sleep",
-    description : "Sleep to rest",
-    status : "completed",
-    id : 2,
-    duedate : "2021-09-30"
-  },
-
-  {
-    title : "Sleep",
-    description : "Sleep to rest",
-    status : "completed",
-    id : 3,
-    duedate : "2021-09-30"
-  },
-  {
-    title : "Code",
-    description : "Code to build",
-    status : "In progress",
-    id : 4,
-    duedate : "2021-09-30"
-  },
-  {
-
-    title : "Repeat",
-    description : "Repeat to succeed",
-    status : "pending",
-    id : 5,
-    duedate : "2021-09-30"
-
-  },
-  ,
-  {
-    title : "Sleep",
-    description : "Sleep to rest",
-    status : "completed",
-    id : 6,
-    duedate : "2021-09-30"
-  },
-  {
-    title : "Code",
-    description : "Code to build",
-    status : "In progress",
-    id : 7,
-    duedate : "2021-09-30"
-  },
-  {
-
-    title : "Repeat",
-    description : "Repeat to succeed",
-    status : "pending",
-    id : 8,
-    duedate : "2021-09-30"
-
-  },
-
-  
-]
-
 
 
 const App = () => {
+
+
+  const [tasks,setTasks] = useState([]);
+
+  useEffect(() => {
+    const getTasks = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/api/tasks");
+            if (!response.ok) {
+                throw new Error('Failed to fetch tasks');
+            }
+            const tasksFromServer = await response.json();
+            setTasks(tasksFromServer);
+        } catch (error) {
+            console.error('Error fetching tasks:', error.message);
+            // Handle error here, such as showing an error message to the user
+            toast.error('Failed to fetch tasks. Please try again later.');
+        }
+    };
+    getTasks();
+}, [tasks]);
 
 
  

@@ -10,11 +10,23 @@ const Taskitems = ({ task }) => {
   const { title, description, status, id, duedate } = task;
 
   const DeleteHandler = (id) => {
+
+    const deleteTask = async () => {
+        const res = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+            method: 'DELETE'
+        });
+        const data = await res.json();
+        console.log(data);
+        }
+        deleteTask();
+
     toast.error('Task Deleted');
     
   }
 
   const EditHandler = () => {
+
+    
     setIsEdit(true);
   }
 
@@ -39,7 +51,7 @@ const Taskitems = ({ task }) => {
             <DialogTitle>Edit Todo</DialogTitle>
             <DialogContent>
               <div>
-                <TaskForm Edit={true} />
+                <TaskForm id={id} Edit={true} />
               </div>
             </DialogContent>
             <DialogActions>

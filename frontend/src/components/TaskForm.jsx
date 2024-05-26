@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast';
 
-const TaskForm = ({Edit}) => {
+const TaskForm = ({Edit,id}) => {
 
+
+    
 
    const [formData, setFormData] = useState({
     title: '',
@@ -19,13 +21,45 @@ const TaskForm = ({Edit}) => {
     
     const AddHandler = (e) => {
         e.preventDefault();
-        console.log(formData);
+
+
+
+        const addTask = async () => {
+            const res = await fetch('http://localhost:5000/api/tasks', {    
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();  
+            console.log(data);
+        }
+        addTask();
+
+
         toast.success("Added Successfully");
     }
 
     const EditHandler = (e) => {
         e.preventDefault();
         console.log(formData);
+
+
+        const editTask = async () => {
+            const res = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            console.log(data);
+        }
+        editTask();
+
+
         toast.success("Edit Successfully");
     }
 
@@ -46,7 +80,8 @@ const TaskForm = ({Edit}) => {
               </div>
                  <div className=' flex flex-col  '>
                  <label htmlFor='status'>Status</label>
-                 <select className='px-2 border border-gray-100 py-2' name='status' id='status' onChange={changeHandler} value={formData.status}>
+                 <select  required className='px-2 border border-gray-100 py-2' name='status' id='status' onChange={changeHandler} value={formData.status}>
+                     <option value='' disabled>Select</option>
                      <option value='completed'>Completed</option>
                      <option value='In progress'>In progress</option>
                      <option value='pending'>Pending</option>
@@ -72,7 +107,8 @@ const TaskForm = ({Edit}) => {
               </div>
                  <div className=' flex flex-col  '>
                  <label htmlFor='status'>Status</label>
-                 <select className='px-2 border border-gray-100 py-2' name='status' id='status' onChange={changeHandler} value={formData.status}>
+                 <select required className='px-2 border border-gray-100 py-2' name='status' id='status' onChange={changeHandler} value={formData.status}>
+                    <option value='' disabled>Select</option>
                      <option value='completed'>Completed</option>
                      <option value='In progress'>In progress</option>
                      <option value='pending'>Pending</option>
