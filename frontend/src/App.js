@@ -10,6 +10,8 @@ const App = () => {
 
   const {tasks,isAdd} = useSelector((state) => state.tasks);
 
+  console.log(tasks);
+
   const dispatch = useDispatch();
   
 

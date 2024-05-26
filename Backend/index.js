@@ -43,7 +43,8 @@ const server = http.createServer((req, res) => {
         });
         req.on('end', () => {
             const { title, description, status, duedate } = JSON.parse(body);
-            const id = tasks.length + 1;
+             let id = 0;
+             id += 1;
             tasks.push({ id, title, description, status, duedate });
             res.writeHead(201, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ id, title, description, status, duedate }));

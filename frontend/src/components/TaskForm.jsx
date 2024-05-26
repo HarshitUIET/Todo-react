@@ -24,6 +24,7 @@ const TaskForm = ({Edit,id}) => {
     useEffect(() => {
         if (Edit) {
             // Fetch task details from API based on the task ID
+            console.log(id);
             const fetchTask = async () => {
                 const res = await fetch(`https://todo-react-0nnu.onrender.com/api/tasks/${id}`);
                 const data = await res.json();
@@ -31,7 +32,7 @@ const TaskForm = ({Edit,id}) => {
             };
             fetchTask();
         } 
-    }, [Edit, id]);
+    }, [Edit]);
     
     const AddHandler = (e) => {
         e.preventDefault();
