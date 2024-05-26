@@ -25,7 +25,7 @@ const TaskForm = ({Edit,id}) => {
         if (Edit) {
             // Fetch task details from API based on the task ID
             const fetchTask = async () => {
-                const res = await fetch(`http://localhost:5000/api/tasks/${id}`);
+                const res = await fetch(`https://todo-react-0nnu.onrender.com/api/tasks/${id}`);
                 const data = await res.json();
                 setFormData(data); // Update form data with task details
             };
@@ -39,7 +39,7 @@ const TaskForm = ({Edit,id}) => {
 
 
         const addTask = async () => {
-            const res = await fetch('http://localhost:5000/api/tasks', {    
+            const res = await fetch('https://todo-react-0nnu.onrender.com/api/tasks', {    
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -62,7 +62,7 @@ const TaskForm = ({Edit,id}) => {
 
 
         const editTask = async () => {
-            const res = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+            const res = await fetch(`https://todo-react-0nnu.onrender.com/api/tasks/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-type': 'application/json'

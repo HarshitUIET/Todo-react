@@ -18,7 +18,7 @@ const Taskitems = ({ task }) => {
   const DeleteHandler = (id) => {
 
     const deleteTask = async () => {
-        const res = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+        const res = await fetch(`https://todo-react-0nnu.onrender.com/api/tasks/${id}`, {
             method: 'DELETE'
         });
         const data = await res.json();
