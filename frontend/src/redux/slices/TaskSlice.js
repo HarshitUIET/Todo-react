@@ -1,51 +1,33 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    try {
-        const res = await fetch('https://todo-react-0nnu.onrender.com/api/tasks');
-        if (!res.ok) {
-            throw new Error('Failed to fetch tasks');
-        }
-        const data = await res.json();
-        console.log("Adding",data.id);
-        return data;
-    } catch (error) {
-    
-        throw error; 
-    }
+    const res = await fetch('https://todo-react-0nnu.onrender.com/api/tasks');
+    return res.json();
 });
 
-export const TaskSlice = createSlice({
+const taskSlice = createSlice({
     name: 'tasks',
     initialState: {
         tasks: [],
-        isAdd: false,
         isEdit: false,
-        error: null, // Add error state
+        isAdd: false,
+        clickedId: null,
     },
     reducers: {
+        setIsEdit: (state, action) => {
+            state.isEdit = action.payload.isEdit;
+            state.clickedId = action.payload.id;
+        },
         setIsAdd: (state, action) => {
             state.isAdd = action.payload;
-        },
-        setIsEdit: (state, action) => {
-            state.isEdit = action.payload;
-        },
+        }
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(fetchTasks.pending, (state) => {
-                // Handle pending state if needed
-            })
-            .addCase(fetchTasks.fulfilled, (state, action) => {
-                state.tasks = action.payload;
-                state.error = null; 
-            })
-            .addCase(fetchTasks.rejected, (state, action) => {
-                state.error = action.error.message;
-            });
-    },
+        builder.addCase(fetchTasks.fulfilled, (state, action) => {
+            state.tasks = action.payload;
+        });
+    }
 });
 
-export const { setIsAdd, setIsEdit } = TaskSlice.actions;
-
-export default TaskSlice.reducer;
+export const { setIsEdit, setIsAdd } = taskSlice.actions;
+export default taskSlice.reducer;
