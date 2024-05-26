@@ -6,7 +6,9 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
         if (!res.ok) {
             throw new Error('Failed to fetch tasks');
         }
-        return await res.json();
+        const data = await res.json();
+        console.log("Adding",data.id);
+        return data;
     } catch (error) {
     
         throw error; 
