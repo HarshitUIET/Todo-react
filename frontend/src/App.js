@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Taskitems from './components/Taskitems'
 import TaskForm from './components/TaskForm';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { toast } from 'react-hot-toast';
 
 const tasks = [
   {
@@ -17,25 +19,19 @@ const tasks = [
     id : 2,
     duedate : "2021-09-30"
   },
-  {
-    title : "Eat food",
-    description : "Eat food to survive",
-    status : "completed",
-    id : 1,
-    duedate : "2021-09-30"
-  },
+
   {
     title : "Sleep",
     description : "Sleep to rest",
     status : "completed",
-    id : 2,
+    id : 3,
     duedate : "2021-09-30"
   },
   {
     title : "Code",
     description : "Code to build",
     status : "In progress",
-    id : 3,
+    id : 4,
     duedate : "2021-09-30"
   },
   {
@@ -43,7 +39,7 @@ const tasks = [
     title : "Repeat",
     description : "Repeat to succeed",
     status : "pending",
-    id : 4,
+    id : 5,
     duedate : "2021-09-30"
 
   },
@@ -52,14 +48,14 @@ const tasks = [
     title : "Sleep",
     description : "Sleep to rest",
     status : "completed",
-    id : 2,
+    id : 6,
     duedate : "2021-09-30"
   },
   {
     title : "Code",
     description : "Code to build",
     status : "In progress",
-    id : 3,
+    id : 7,
     duedate : "2021-09-30"
   },
   {
@@ -67,7 +63,7 @@ const tasks = [
     title : "Repeat",
     description : "Repeat to succeed",
     status : "pending",
-    id : 4,
+    id : 8,
     duedate : "2021-09-30"
 
   },
@@ -80,11 +76,18 @@ const tasks = [
 const App = () => {
 
 
-  const [isopen,setIsopen] = useState(false);
+ 
+  const [isAdd,setIsAdd] = useState(false);
 
  const AddHandler = () => {
-    setIsopen(true);
+    setIsAdd(true);
+    console.log("Added");
  }
+
+ const handleToClose = () => {
+    setIsAdd(false);
+    console.log("Closed");  
+  }
 
   return ( 
    
@@ -98,6 +101,19 @@ const App = () => {
           </div>
           <div className=''>
             <button onClick={AddHandler} className='bg-lightpink text-white px-4 py-4 rounded-md mt-3'>Add Todo</button>
+            <Dialog open={isAdd} onClose={handleToClose}>
+              <DialogTitle>Add Todo</DialogTitle>
+              <DialogContent>
+                
+                 <div>
+                 <TaskForm Edit={false} />
+                 </div>
+                
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleToClose} color='primary' autoFocus >Close</Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
        <div className=' max-h-[120] overflow-y-auto no-scrollbar'>

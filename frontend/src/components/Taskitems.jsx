@@ -1,38 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { MdEditNote } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
+import TaskForm from './TaskForm';
 
-const Taskitems = ({task}) => {
+const Taskitems = ({ task }) => {
+  const [isEdit, setIsEdit] = useState(false);
+  const { title, description, status, id, duedate } = task;
 
+  const DeleteHandler = (id) => {
+    toast.error('Task Deleted');
+    
+  }
 
-    const {title, description, status, id, duedate} = task;
+  const EditHandler = () => {
+    setIsEdit(true);
+  }
 
-    const DeleteHandler = (id) => {
-        console.log('Delete')
-    }
-
-    const EditHandler = (id) => {
-        console.log('Edit')
-    }
+  const handleToClose = () => {
+    setIsEdit(false);
+  }
 
   return (
-    <div className=' text-white'>
-        <div className='flex justify-between px-4 py-4 border-b border-lightpink'>
-            <div>
-            <h1 className='text-2xl text-light'>{title}</h1>
-            <p className='text-lg'>{description}</p>
-            <p className='text-lg'>{duedate}</p>
-            </div>
-            <div className=' w-1/4 flex justify-evenly '>
-            <div className=' rounded-md mt-4 h-[50px] w-[110px] py-2 px-2 bg-lightBlue text-white '>
-                <p className='text-lg'>{status}</p>
-            </div>
-            <button onClick={EditHandler}><MdEditNote size={40}/></button>
-            <button onClick={DeleteHandler} ><RiDeleteBinLine color='red' size={40}/></button>
-            </div>
+    <div className='text-white'>
+      <div className='flex justify-between px-4 py-4 border-b border-lightpink'>
+        <div>
+          <p className='text-2xl text-light'>{title}</p>
+          <p className='text-lg'>{description}</p>
+          <p className='text-lg'>{duedate}</p>
         </div>
+        <div className='w-1/4 flex justify-evenly'>
+          <div className='rounded-md mt-4 h-[50px] w-[110px] py-2 px-2 bg-lightBlue text-white'>
+            <p className='text-lg'>{status}</p>
+          </div>
+          <button onClick={EditHandler}><MdEditNote size={40} /></button>
+          <Dialog open={isEdit} onClose={handleToClose}>
+            <DialogTitle>Edit Todo</DialogTitle>
+            <DialogContent>
+              <div>
+                <TaskForm Edit={true} />
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleToClose} color='primary' autoFocus>Close</Button>
+            </DialogActions>
+          </Dialog>
+          <button onClick={() => DeleteHandler(id)}><RiDeleteBinLine color='red' size={40} /></button>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default Taskitems
+export default Taskitems;
