@@ -69,11 +69,11 @@ const TaskForm = ({ Edit, id }) => {
     return (
         <div>
             {Edit ? (
-                <form className='flex flex-col w-[500px] h-[350px]' onSubmit={EditHandler}>
+                <form className='flex flex-col w-[270px] md:w-[500px] h-[350px]' onSubmit={EditHandler}>
                     <div className='flex flex-col mb-3'>
                         <label htmlFor="title">Title</label>
                         <input
-                            className='px-2 border border-gray-100 py-2'
+                            className='  px-2 border border-gray-100 py-2'
                             type='text'
                             placeholder='Enter the title of the task'
                             id='title'
@@ -127,7 +127,7 @@ const TaskForm = ({ Edit, id }) => {
                     <button className='rounded-md h-[70px] w-[120px] bg-lightBlue text-white' type='submit'>Edit Task</button>
                 </form>
             ) : (
-                <form className='flex flex-col w-[500px] h-[350px]' onSubmit={AddHandler}>
+                <form className='flex flex-col w-[270px] md:w-[500px] h-[350px]' onSubmit={AddHandler}>
                     <div className='flex flex-col mb-3'>
                         <label htmlFor="title">Title</label>
                         <input

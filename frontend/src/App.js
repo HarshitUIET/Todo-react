@@ -34,10 +34,10 @@ const App = () => {
                 <div className='flex justify-evenly mt-2'>
                     <div className='text-center mt-3'>
                         <span className='text-3xl font-bold text-lightpink'>Todo </span>
-                        <span className='text-3xl font-bold text-lightBlue px-2'>App</span>
+                        <span className='text-3xl font-bold text-lightBlue sm:px-2'>App</span>
                     </div>
                     <div>
-                        <button onClick={AddHandler} className='bg-lightpink text-white px-4 py-4 rounded-md mt-3'>Add Todo</button>
+                        <button onClick={AddHandler} className='bg-lightpink text-white  px-2 py-2 sm:px-4 sm:py-4 rounded-md mt-3'>Add Todo</button>
                         <Dialog open={isAdd} onClose={handleToClose}>
                             <DialogTitle>Add Todo</DialogTitle>
                             <DialogContent>
@@ -68,7 +68,7 @@ const App = () => {
                             <Taskitems task={task} key={task.id} />
                         ))
                     ) : (
-                        <div className='text-center text-3xl font-bold text-lightpink mt-44'>No Task to show</div>
+                        <div className='text-center text-3xl  md:font-bold text-lightpink mt-44'>No Task to show</div>
                     )}
                 </div>
             </div>
